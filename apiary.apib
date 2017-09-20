@@ -4,6 +4,26 @@ FORMAT: 1A
 
 This is the API documentation for the Blackboard Transact Slate project.  The intended audience is for developers in the Phoenix and Brno offices.
 
+# Group Board
+    
+## Board Management [/board]
+
+### Board Information Get [GET /board/device/{OriginatorGuid}/customer/{CustomerGuid}/information?IsGuestMeal={isGuestMeal}&MealTypeId={mealtypeId}&ForcePost={forcePost}&BoardPlanId={boardPlanId}"]
++ Attributes
+    + CustomerGuid: `cccccccc-cccc-cccc-cccc-cccccccccccc` - The unique identifier for the customer (GUID).
+    + OriginatorGuid: `dddddddd-dddd-dddd-dddd-dddddddddddd` - The unique identifier for the device (GUID).
+    + isGuestMeal: false - Is this board transaction to be treated as a guest meal.
+    + mealTypeId: 1 - The meal type.
+    + forcePost: false - Indicates whether or not the transaction was performed offline and should be force posted.
+    + boardPlanId: 1 - Limit the query to the specific board plan; otherwise if not specified, get them all.
+    
++ Response 200 (application/json)
+    + Headers
+    
+            Content-Type: application/json; charset=UTF-8
+    + Attributes (Board Information Get Response)
+
+
 # Group Customer
     
 ## Customer Management [/customer]
@@ -184,7 +204,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 # Data Structures
 
 
-## Base objects section (object) - do not use for documentation
+## Base objects section (object) - do not use; for documentation only
 + x: `************************************************************************************************`
 
 
@@ -264,6 +284,92 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + IssueNumberLength: 2 (number) - Maximum length of issue number.
 + MinimumDigitsTrack2: 0 (number) - The minimum number of digits on track 2
 + MaximumDigitsTrack2: 22 (number) - The maximum number of digits on track 2
+
+## Customer Board Count (object)
++ BoardPlanId: 26
++ BoardPlanName: tb bp 1 - no restrictions
++ Priority: 1
++ BoardPlanIsActive: T
++ BoardPlanActiveFrom: 0
++ BoardPlanActiveTo: 43995
++ CustomerBoardIsActive: T
++ CustomerBoardActiveFrom: 0
++ CustomerBoardActiveTo: 43995
++ RegularGridAllowed: -2
++ RegularGridUsed: 0
++ RegularGridLeft: -2
++ RegularGridConsumed: 0
++ GuestGridAllowed: -2
++ GuestGridUsed: 0
++ GuestGridLeft: -2
++ GuestGridConsumed: 0
++ PeriodAllowed: -2
++ PeriodUsed: 0
++ PeriodLeft: -2
++ PeriodConsumed: 0
++ DayAllowed: -2
++ DayUsed: 0
++ DayLeft: -2
++ DayConsumed: 0
++ WeekAllowed: -2
++ WeekUsed: 0
++ WeekLeft: -2
++ WeekConsumed: 0
++ MonthAllowed: -2
++ MonthUsed: 16
++ MonthLeft: -2
++ MonthConsumed: 0
++ SemesterQuarterAllowed: -2
++ SemesterQuarterUsed: 16
++ SemesterQuarterLeft: -2
++ SemesterQuarterConsumed: 0
++ YearAllowed: -2
++ YearUsed: 98
++ YearLeft: -2
++ YearConsumed: 0
++ GuestTotalAllowed: -2
++ GuestTotalUsed: 0
++ GuestTotalLeft: -2
++ GuestTotalConsumed: 0
++ ExtraAllowed: 0
++ ExtraUsed: 0
++ ExtraLeft: 0
++ ExtraConsumed: 0
++ TransferLeft: 0
++ TransferConsumed: 0
++ ExtraTransferConsumedtype: 0
++ TransferMealsBy: W
++ GuestReset: W
++ ExtraReset: W
++ LimitPeriodBy: W
++ ExtraIfExceeded: D
++ ExtraIfExceededControl: 2
++ BpCashequivforGuest: T
++ BpRegMealsBeforeGuest: T
++ CashEquivalentAmount: 9000
++ BoardCountMaxAvailable: 99999
++ CurrentPeriod: 5
++ ActualPeriod: 5
++ DayOfWeek: 2
++ TypeUsed: 1
++ PeriodRolled: F
++ DayRolled: F
++ WeekRolled: F
++ WeekRolledDate: 42995
++ MonthRolled: F
++ MonthRolledDate: 42979
++ SemesterQuarterRolled: F
++ SemesterQuarterRolledDate: 42979
++ YearRolled: F
++ YearRolledDate: 0
++ GuestRolled: F
++ ExtraRolled: F
++ ShowBoardCount: T
++ PrintBoardCount: T
++ MaxCountContribution: 0
++ IsOnline: T
++ ErrorCode: 0
++ ErrorText: null
 
 ## Operator Base (object)
 + Include Operator Id
@@ -456,6 +562,9 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 ## Request and Response Objects section do not use for documentation (object)
 + x: `************************************************************************************************`
 
+## Board Information Get Response (object)
++ Include Request Id
++ CustomerBoardCount (Customer Board Count) - the board count information for the customer.
 
 ## Customer Get Response (object)
 + Include Customer Id
