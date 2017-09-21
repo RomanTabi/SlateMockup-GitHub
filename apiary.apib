@@ -128,7 +128,40 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     - Response code 400 is returned if there is a problem with any of the request parameters.
     + Attributes (Response 400 Error)
     
+    
+# Group Event Log
+    
+## Event Log Management [/eventlog]
 
+### Event Log Get [GET /eventlog/{EventLogId}]
++ Attributes
+    + EventLogId: 501 (number) - The unique identifier for the event log (ID).
+    
++ Response 200 (application/json)
+    + Headers
+    
+            Content-Type: application/json; charset=UTF-8
+    + Attributes (Event Log Get Response)
+
+### Event Log Get Summary [GET /eventlog/summary]
++ Attributes (Event Log Get Summary Request)
+    
++ Response 200 (application/json)
+    + Headers
+    
+            Content-Type: application/json; charset=UTF-8
+    + Attributes (Event Log Get Summary Response)
+
+### Event Log Set [POST /eventlog]
++ Attributes (Event Log Set Request)
+    
++ Response 200 (application/json)
+    + Headers
+    
+            Content-Type: application/json; charset=UTF-8
+    + Attributes (Event Log Set Response)
+    
+ 
 # Group Operator
 
 ## Operator Management [/operator]
@@ -190,7 +223,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     - Response code 400 is returned if there is a problem with any of the request parameters.
     + Attributes (Response 400 Error)
     
-
+   
 # Group Service
 
 ## Service Healthcheck [GET /healthcheck]
@@ -446,6 +479,19 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + EventStopDateTime: `2017-04-23T13:00:00.321Z` (string) - The stop time of the event.
 + DateTimeOffset: `-07:00` (string) - The UTC offset of the included DateTime objects.
 
+## EventLog Summary Base (object)
++ EventLogId: 501 (number) - The event log id.
++ ProviderName: BbTSWebApi (string) - Identifies the provider that logged the event.
++ ComputerName: vmadobes2.transactpd.net (string) - The name of the computer on which the event occurred.
++ EventId: 1 (number) - The identifier that the provider used to identify the event.
++ Severity: 1 (number) - Contains the severity level of the event.
++ CreatedDateTime: `2016-04-23T18:25:43.511Z` (string) - The Date Time object that identifies when the event was logged.
+
+## EventLog Base (object)
++ Include EventLog Summary Base (object)
++ TaskCategory: 1 (number) The task defined in the event.
++ Message: Event Log Message (string) - The message string.
+
 ## Healthcheck Item Database (object)
 + Name: Database Check - Healthcheck item that verifies connectivity to the Transact Database.
 + Result: Pass - Result of the check (Pass or Fail)
@@ -666,6 +712,32 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + TaxSchedules (array[Tax Schedule Base]) - List of tax schedules for the device.
 + Tenders (array[Tender Base]) - List of tenders for the device.
 + Properties (array[NameValuePair]) - Properties bag for the device.
+
+## Event Log Get Response (object)
++ EventLogId: 1 (number) - Event log id.
++ EventLog (EventLog Base) - The event log information requested.
+
+## Event Log Get Summary Request (object)
++ ProviderName: BbTSWebApi (string) - Identifies the provider that logged the event.
++ ComputerName: vmadobes2.transactpd.net (string) - The name of the computer on which the event occurred.
++ Severity: 1 (number) - Contains the severity level of the event.
++ CreatedFromDate: `2016-04-23T18:25:43.511Z` (string) - The Date Time object that sets lower CreatedDateTime bound.
++ CreatedUntilDate: `2016-04-23T18:25:43.511Z` (string) - The Date Time object that sets upper CreatedDateTime bound.
+
+## Event Log Get Summary Response (object)
++ Request (Event Log Get Summary Request) - Requested that spawned this response.
++ EventLogs (array[EventLog Summary Base]) - Event logs filtered by request.
+
+## Event Log Set Request (object)
++ ProviderName: BbTSWebApi (string) - Identifies the provider that logged the event.
++ ComputerName: vmadobes2.transactpd.net (string) - The name of the computer on which the event occurred.
++ EventId: 1 (number) - The identifier that the provider used to identify the event.
++ Severity: 1 (number) - Contains the severity level of the event.
++ TaskCategory: 1 (number) The task defined in the event.
++ Message: Event Log Message (string) - The message string.
+
+## Event Log Set Response (object)
++ Request (Event Log Set Request) - Requested that spawned this response.
 
 ## Operator PIN Change Request (object)
 + Include Request Id
