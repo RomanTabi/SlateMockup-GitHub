@@ -17,7 +17,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     + forcePost: false - Indicates whether or not the transaction was performed offline and should be force posted.
     + boardPlanId: 1 - Limit the query to the specific board plan; otherwise if not specified, get them all.
     
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -33,7 +33,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     + customerId: `cccccccc-cccc-cccc-cccc-cccccccccccc` - The unique identifier for the customer (GUID).
     + deviceId: `dddddddd-dddd-dddd-dddd-dddddddddddd` - The unique identifier for the device (GUID).
 
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -44,7 +44,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     + customerId: `cccccccc-cccc-cccc-cccc-cccccccccccc` - The unique identifier for the customer (GUID).
     + deviceId: `dddddddd-dddd-dddd-dddd-dddddddddddd` - The unique identifier for the device (GUID).
 
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -54,13 +54,13 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Request (application/json)
     + Attributes (Customer Credential Verify Request)
 
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
     + Attributes (Customer Credential Verify Response)
     
-+ Response 400 (application/json)
++ Response 400
     - Response code 400 is returned if there is a problem with any of the request parameters.
     + Attributes (Response 400 Error)
 
@@ -68,7 +68,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Attributes
     + id: `cccccccc-cccc-cccc-cccc-cccccccccccc` - The unique identifier for the customer (GUID).
 
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -82,7 +82,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Request (application/json)
     + Attributes (Device Heartbeat Request)
     
-+ Response 201 (application/json)
++ Response 201
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -96,7 +96,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Attributes
     + id: `ffffffff-ffff-ffff-ffff-ffffffffffff` (string, required) - The unique identifier assigned to the device.
 
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -107,7 +107,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Attributes
     + id: `ffffffff-ffff-ffff-ffff-ffffffffffff` (string, required) - The unique identifier assigned to the device.
 
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -117,7 +117,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Request (application/json)
     + Attributes (Device Registration Request)
     
-+ Response 201 (application/json)
++ Response 201
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -137,7 +137,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Request (application/json)
     + Attributes (Operator Session Begin Request)
     
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -151,7 +151,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Request (application/json)
     + Attributes (Operator Session End Request)
     
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -166,7 +166,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Request (application/json)
     + Attributes (Operator PIN Change Request)
     
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -180,7 +180,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Request (application/json)
     + Attributes (Operator Validate Request)
     
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -195,7 +195,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 
 ## Service Healthcheck [GET /healthcheck]
     
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -210,7 +210,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Request (application/json)
     + Attributes (Transaction Post Request)
     
-+ Response 200 (application/json)
++ Response 200
     + Headers
     
             Content-Type: application/json; charset=UTF-8
@@ -306,7 +306,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 
 ## Customer Board Count (object)
 + BoardPlanId: 26
-+ BoardPlanName: tb bp 1 - no restrictions
++ BoardPlanName: `tb bp 1 - no restrictions` - 
 + Priority: 1
 + BoardPlanIsActive: T
 + BoardPlanActiveFrom: 0
@@ -314,41 +314,41 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + CustomerBoardIsActive: T
 + CustomerBoardActiveFrom: 0
 + CustomerBoardActiveTo: 43995
-+ RegularGridAllowed: -2
++ RegularGridAllowed: `-2` 
 + RegularGridUsed: 0
-+ RegularGridLeft: -2
++ RegularGridLeft: `-2`
 + RegularGridConsumed: 0
-+ GuestGridAllowed: -2
++ GuestGridAllowed: `-2`
 + GuestGridUsed: 0
-+ GuestGridLeft: -2
++ GuestGridLeft: `-2`
 + GuestGridConsumed: 0
-+ PeriodAllowed: -2
++ PeriodAllowed: `-2`
 + PeriodUsed: 0
-+ PeriodLeft: -2
++ PeriodLeft: `-2`
 + PeriodConsumed: 0
-+ DayAllowed: -2
++ DayAllowed: `-2`
 + DayUsed: 0
-+ DayLeft: -2
++ DayLeft: `-2`
 + DayConsumed: 0
-+ WeekAllowed: -2
++ WeekAllowed: `-2`
 + WeekUsed: 0
-+ WeekLeft: -2
++ WeekLeft: `-2`
 + WeekConsumed: 0
-+ MonthAllowed: -2
++ MonthAllowed: `-2`
 + MonthUsed: 16
-+ MonthLeft: -2
++ MonthLeft: `-2`
 + MonthConsumed: 0
-+ SemesterQuarterAllowed: -2
++ SemesterQuarterAllowed: `-2`
 + SemesterQuarterUsed: 16
-+ SemesterQuarterLeft: -2
++ SemesterQuarterLeft: `-2`
 + SemesterQuarterConsumed: 0
-+ YearAllowed: -2
++ YearAllowed: `-2`
 + YearUsed: 98
-+ YearLeft: -2
++ YearLeft: `-2`
 + YearConsumed: 0
-+ GuestTotalAllowed: -2
++ GuestTotalAllowed: `-2`
 + GuestTotalUsed: 0
-+ GuestTotalLeft: -2
++ GuestTotalLeft: `-2`
 + GuestTotalConsumed: 0
 + ExtraAllowed: 0
 + ExtraUsed: 0
