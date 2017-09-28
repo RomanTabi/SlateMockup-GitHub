@@ -1,4 +1,4 @@
-FORMAT: 1A
+noFORMAT: 1A
 
 # SlateMockup
 
@@ -200,6 +200,25 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     
             Content-Type: application/json; charset=UTF-8
     + Attributes (Healthcheck Response)
+    
+
+# Group Transaction
+
+## Transaction Processing [/transaction]
+
+### Process a transaction [POST /transaction]
++ Request (application/json)
+    + Attributes (Transaction Post Request)
+    
++ Response 200 (application/json)
+    + Headers
+    
+            Content-Type: application/json; charset=UTF-8
+    + Attributes (Transaction Post Response)
+
++ Response 400 (application/json)
+    - Response code 400 is returned if there is a problem with any of the request parameters.
+    + Attributes (Response 400 Error)
 
 # Data Structures
 
@@ -558,6 +577,96 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Type: 1 (number) - The type of tender.
 + ShortName: cpcash1tt (string) - The shortened name for the tender.
 
+## Transaction related objects section do not use for documentation (object)
++ x: `----------------------------------------------------------------------------------------------------`
+
+## Transaction Base (object)
++ Include Generic Id
++ Disposition: 2 - NEEDS DEFINITION
++ ForcePost: false - If true, transaction was performed offline and needs to be forced.  If false, transaction was online and should be treated as such.
++ TransactionTimestamps (array[Transaction Timestamp Base]) - Collection of timestamps associated with the transaction.
++ Elements (Transaction Element) - List of Elements for the transaction.
+
+## Transaction Element (object) - Abstract class type used as a base definition for a variety of "element" types.
++ OriginatorElement (Originator Element, optional) - Inherited element required in the elements part of a transaction to denote where the transaction originated from (the device).
++ CashierElement (Cashier Element, optional) - Inherited element required in the elements part of a transaction to denote who performed the transaction (the operator or cashier).
++ ArtsTransactionElement( Arts Transaction Element, optional) - Inherited element required in the elements part of a transaction to denote that an arts type transaction took place.
+
+## Originator Element(object)
++ $type: `BbTS.Domain.Models.Container.Elements.OriginatorElement, BbTS.Domain.Models` - The required field denoting the concrete type of this element.
++ Include Originator Id
++ Type (Originator Type Enumeration) - The type of originator where the transaction was performed at.
++ AttendType (Attend Type Enumeration) - Indicated the level of interation with an operator.
++ Include Generic Id
++ Include Sequence Number
+
+## Cashier Element (object)
++ $type: `BbTS.Domain.Models.Container.Elements.CashierElement, BbTS.Domain.Models` - The required field denoting the concrete type of this element.
++ Include Cashier Guid
++ CashierMode (Cashier Mode Enumeration) - The level of rights the cashier was operating under.
++ Include Session Id
++ CashDrawerNumber: 1 - The drawer the cashier is operating out of.
++ Include Generic Id
++ Include Sequence Number
+
+## Arts Transaction Element (object)
++ $type: `BbTS.Domain.Models.Container.Elements.ArtsTransactionElement, BbTS.Domain.Models` - The required field denoting the concrete type of this element.
++ Include Transaction Id
++ TransactionNumber: 123456 - The numerical value assigned to the transaction to assist in failover detection.
++ CancelledFlag: false - True if this transaction is a cancelled transaction.
++ KeyedOfflineFlag: false - True if this transaction was keyed offline.
++ ValidationType (Validation Type Enumeration) - Specified if the transaction was accepted or denied while online or offline.
++ TranType (Transaction Type Enumeration) - Specified if the transaction is a sale or return
++ ControlTotal: 12345.67 - Control total at the time of this transaction (including this transaction).
++ ChangeInControlTotal: 12345.67 - The change in control total resulting from this transaction.  This should never be negative.
++ LineItems (array[Line Item Display]) - List of line items attached to this arts transaction.
++ Include Generic Id
++ Include Sequence Number
+
+## Line Item Display (object)
++ LineItemProduct (Line Item Product)
+
+## Line Item Base (object)
++ Include Transaction Id
++ Include Line Item Sequence Number
++ VoidFlag: false - Indiciated whether or not this line item was void.
+
+## Line Item Product (object)
++ Include Line Item Base
++ $type: `BbTS.Domain.Models.ArtsDataModel.LineItemProduct, BbTS.Domain.Models` - The required field denoting the concrete type of this line item.
++ ProductDetailId: 1 - Product Detail Id.
++ ProductDescription: Some description - Product description.
++ TaxScheduleId: 1 - Tax Schedule Id.
++ TaxAccountName: MF4100 NoTax Acct - Tax Account Name
++ TaxGroupId: 1 - Tax Group Id.
++ RetailPrice: 0.0 - Retail Price.
++ RetailPriceQuantity: 1 - Retail Price Quantity
++ ActualUnitPrice: 37.83 - Actual Unit Price
++ ActualUnitPriceQuantity: 1 - Actual Unit Price Quantity
++ Quantity: 1 - Quantity
++ Units: 1 - Units
++ UnitMeasureType (Unit Measure Type Enumeration) - Unit Measure Type
++ ExtendedAmount: 37.83 - Extended Amount
++ UnitDiscountAmount: 0.0 - Unit Discount Amount
++ ExtendedDiscountAmount: 0.0 - Extended Discount Amount
++ ProductEntryMethodType (Product Entry Method Type Enumeration) - Product Entry Method Type
++ RetailPriceEntryMethodType (Retail Price Entry Method Type Enumeration) - Retail Price Entry Method Type
++ UnitCostPrice: 0.0 - Unit Cost Price
++ UnitCostPriceQuantity: 1 - Unit Cost Price Quantity
++ UnitListPrice: 0.0 - Unit List Price
++ UnitListPriceQuantity: 1 - Unit List Price Quantity
++ ProductPromotionFlag: false - Product Promotion Flag
++ ProductPromotionPrice: 0.0 - Product Promotion Price
++ ProductPromotionId: 1 - Product Promotion Id
++ RetailPriceModifiedFlag: true - Retail Price Modified Flag
+
+## Transaction Result Set Arts Base (object)
+
+## Transaction Result Set Board Base (object)
+
+## Transaction Timestamp Base (object)
++ TimestampType (Timestamp Type Enumeration) - The type of timestamp.
++ Timestamp: `2012-04-23T18:25:43.511Z` - The timestamp.
 
 ## Request and Response Objects section do not use for documentation (object)
 + x: `************************************************************************************************`
@@ -686,9 +795,22 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Include Operator Id
 + Include Session Id
 
+## Transaction Post Request (object)
++ Include Request Id
++ Include Transaction Base
+
+## Transaction Post Response (object)
++ Include Request Id
++ ErrorCode: 0 - The error code corresponding to the results of the post operation.
++ DeniedText: Success - The error message corresponding to the results of the post operation.
++ ArtsTransactionProcessingResultSet (Transaction Result Set Arts Base) - The results of any arts transactions that might have occured.
++ BoardTransactionProcessingResultSet (Transaction Result Set Board Base) -  The results of any board transactions that might have occured.
 
 ## Common Base Types Section (object) - do not use for documentation
 + x: `**********************************************************************************`
+
+## Cashier Guid (object)
++ CashierGuid: `8D9CC985-ABDC-4851-BCEB-520B877031C8` (string) - The unique identifier for the operator/cashier (GUID).
 
 ## Customer Guid (object)
 + CustomerGuid: `6492868F-3891-42AE-8C02-D9A5C8D5A321` (string) - The unique identifier for the customer (GUID).
@@ -699,14 +821,37 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 ## Device Id (object)
 + DeviceId: `15ADD661-F878-42E5-A283-D88322CBBA4F` (string) - The unique identifier for the device (GUID).
 
+## Generic Id (object)
++ Id: `FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF` (string) - The unique identifier for the object (GUID).
+
+## Line Item Sequence Number (object)
++ LineItemSequenceNumber: 1 - Indicated the order with which this line item appears in the list of arts transction line items.
+
 ## Operator Id (object)
 + OperatorId: `8D9CC985-ABDC-4851-BCEB-520B877031C8` (string) - The unique identifier for the operator (GUID).
+
+## Originator Id (object)
++ OriginatorId: `15ADD661-F878-42E5-A283-D88322CBBA4F` (string) - The unique identifier for the originator (GUID).
 
 ## Request Id (object)
 + RequestId: `5196CD76-D1D6-4E4B-A8FF-949113496F96` (string) - The unique identifier of the request (GUID).
 
+## Sequence Number (object)
++ Sequence: 1 - The order within the list of transaction elements where this element lies.
+
 ## Session Id (object)
 + SessionId: `56653617-4853-4651-9C04-069E71C5075C` (string) - The unique identifier for the session (GUID).
+
+## Transaction Id (object)
++ TransactionId: `FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF` (string) - The unique identifier for the transaction (GUID).
+
+## Attend Type Enumeration (enum)
++ Unattended - Numerical value 0.  No operator present at the point of service.
++ Attended - Numerical value 1.  Operator present at the point of service.
+
+## Cashier Mode Enumeration (enum)
++ Standard - Numerical value 0.  This cashier was operating under their normal cashier rights.
++ Manager - Numerical value 1.  This cashier was operating as a manager and used manager override during this transaction.
 
 ## Credentials Array (object)
 + Credentials (array[Credential Base]) - List of credentials.
@@ -726,12 +871,27 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + OperatorCardSwipeOrManualEntry - Operator can provide their card number manually or via a swipe.
 + Any - Any other form of idenfication (provided in this enumeration) is considered valid.
 
+## Originator Type Enumeration (enum)
++ AT3000 - Numerical value 1.  AT3000 style transaction terminal.
++ MF4100 - Numerical value 2.  MF4100 style transaction terminal.
++ PR5000 - Numerical value 3.  PR5000 style transaction terminal.
++ Workstation - Numerical value 4.  Workstation style transaction terminal.
+
+## Product Entry Method Type Enumeration (enum)
++ MenuItem - 0
++ Scanned - 1
++ Keyed - 2
+
 ## Product Type Enumeration (enum)
 + Standard - Standard product.
 + Weighed - Product must be weighed.
 + WeighedZeroTare - Product must be weighed (zero tare).
 + PromptForCount - The quantity of this product must be specified at the time of purchase.
 + PromptForPrice - The price of this product must be entered at the time of purchase.
+
+## Retail Price Entry Method Type Enumeration (enum)
++ Lookup - 0
++ ManuallyEntered - 1
 
 ## Rights Enumeration (enum)
 + Board_Apply
@@ -813,16 +973,35 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + WsPriv_CreditCard
 + WsPriv_StoredValue
 
-
 ## Schedule Type Enumeration (enum)
 + Daily
 + Weekly
 + Monthly
 + Custom
 
+## Timestamp Type Enumeration (enum)
++ Start - When the transaction was started at the Originator, typically set by Originator.
++ Finish - When the transaction was completed at the Originator, typically set by Originator.
++ Submit - When the transaction was sent from the Originator, typically set by Originator.
++ InQueue - In cases where the transaction could not be sent, this is when the transaction was put into the offline storage, typically set by storage agent.
++ Post - When the transaction was posted to the BbTS database, typically set by database.
+
+## Transaction Type Enumeration (enum)
++ Sale - 0
++ Return - 1
+
+## Unit Measure Type Enumeration (enum)
++ Count - 0
++ Weight - 1 - measured in pounds.
+
 ## Update Enumeration (enum)
 + Settings - Download and apply all device settings.
 
+## Validation Type Enumeration (enum)
++ AcceptedOnline - 0
++ AcceptedOffline - 1
++ DeniedOnline - 2
++ DeniedOffline - 3
 
 
 ## Response Codes (object) - do not use in documentation
