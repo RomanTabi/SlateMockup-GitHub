@@ -589,7 +589,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 
 ## Transaction Element (object) - Abstract class type used as a base definition for a variety of "element" types.
 + OriginatorElement (Originator Element, optional) - Inherited element required in the elements part of a transaction to denote where the transaction originated from (the device).
-+ CashierElement (Cashier Element, optional) - Inherited element required in the elements part of a transaction to denote who performed the transaction (the operator or cashier).
++ OperatorElement (Operator Element, optional) - Inherited element required in the elements part of a transaction to denote who performed the transaction (the operator or cashier).
 + ArtsTransactionElement( Arts Transaction Element, optional) - Inherited element required in the elements part of a transaction to denote that an arts type transaction took place.
 
 ## Originator Element(object)
@@ -600,10 +600,10 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Include Generic Id
 + Include Sequence Number
 
-## Cashier Element (object)
-+ $type: `BbTS.Domain.Models.Container.Elements.CashierElement, BbTS.Domain.Models` - The required field denoting the concrete type of this element.
-+ Include Cashier Guid
-+ CashierMode (Cashier Mode Enumeration) - The level of rights the cashier was operating under.
+## Operator Element (object)
++ $type: `BbTS.Domain.Models.Container.Elements.OperatorElement, BbTS.Domain.Models` - The required field denoting the concrete type of this element.
++ Include Operator Guid
++ OperatorMode (Cashier Mode Enumeration) - The level of rights the operator was operating under.
 + Include Session Id
 + CashDrawerNumber: 1 - The drawer the cashier is operating out of.
 + Include Generic Id
@@ -624,14 +624,17 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Include Sequence Number
 
 ## Line Item Display (object)
-+ LineItemProduct (Line Item Product)
++ LineItemProduct (Line Item Product) - A line item describing a product being sold.
++ LineItemProductPriceModifier (Line Item Product Price Modifier) - A line item modifying the price of a product being sold.
++ LineItemProductTax (Line Item Product Tax) - A line item applying tax to a product being sold.
++ LineItemTenderCash (Line Item Tender Cash) - A line item denoting that cash was used as a tender in processing the sale of the transaction.
 
 ## Line Item Base (object)
 + Include Transaction Id
 + Include Line Item Sequence Number
 + VoidFlag: false - Indiciated whether or not this line item was void.
 
-## Line Item Product (object)
+## Line Item Product (object) - A line item describing a product being sold.
 + Include Line Item Base
 + $type: `BbTS.Domain.Models.ArtsDataModel.LineItemProduct, BbTS.Domain.Models` - The required field denoting the concrete type of this line item.
 + ProductDetailId: 1 - Product Detail Id.
@@ -659,6 +662,37 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + ProductPromotionPrice: 0.0 - Product Promotion Price
 + ProductPromotionId: 1 - Product Promotion Id
 + RetailPriceModifiedFlag: true - Retail Price Modified Flag
+
+## Line Item Product Price Modifier (object) - A line item modifying the price of a product being sold.
++ Include Line Item Base
++ $type: `BbTS.Domain.Models.ArtsDataModel.LineItemProductPriceModifier, BbTS.Domain.Models` - The required field denoting the concrete type of this line item.
++ PriceModifierSequenceNumber: 1 - The sequence number that this price modifier modifies.  Typically this will be the sequence number of a product.
++ Type (Product Price Modifier Type Enumeration) - The type of modifier.
++ ProductPromoFlag: false - Indicates if this is a product promotion.
++ ProductPromotionId: 1 - If ProductPromoFlag is true, this value is the identifier of the promotion being applied.
++ PreviousUnitPrice: 0.0 - The previous unit price.
++ Percent: 0 - NEEDS DEFINITION.
++ Amount: 12345.67 - The amount of the new price.
++ CalculationMethod (Calculation Method Enumeration) - NEEDS DEFINITION.
++ NewUnitPrice: 54321.76 - The new price per unit.
+
+## Line Item Product Tax (object) - A line item applying tax to a product being sold.
++ Include Line Item Base
++ $type: `BbTS.Domain.Models.ArtsDataModel.LineItemProductTax, BbTS.Domain.Models` - The required field denoting the concrete type of this line item.
++ TaxScheduleId: 1 - Tax Schedule Id.
++ TaxAccountName: MF4100 NoTax Acct - Tax Account Name
++ TaxableAmount: 0 - The taxable amount.
++ TaxPercent: 0 - The tax percent.
++ TaxExemptOverrideType (Tax Exempt Override Type Enumeration) - The type of tax exempt override.
+
+## Line Item Tender Cash (object) - A line item denoting that cash was used as a tender in processing the sale of the transaction.
++ Include Line Item Base
++ $type: `BbTS.Domain.Models.ArtsDataModel.LineItemTenderCash, BbTS.Domain.Models` - The required field denoting the concrete type of this line item.
++ TenderId: 1 - The identifier for the tender (this should be a cash tender).
++ TenderType (Tender Type Enumeration) - The type of tender.
++ TenderAmount: 21.01 - The amount of tender used.
++ RoundingAmount: 0 - The rounding amount associated with the currency being used.  For example: Canada rounds to 0.05 for cash transactions.
+
 
 ## Transaction Result Set Arts Base (object)
 
@@ -827,6 +861,9 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 ## Line Item Sequence Number (object)
 + LineItemSequenceNumber: 1 - Indicated the order with which this line item appears in the list of arts transction line items.
 
+## Operator Guid (object)
++ OperatorGuid: `8D9CC985-ABDC-4851-BCEB-520B877031C8` (string) - The unique identifier for the operator/cashier (GUID).
+
 ## Operator Id (object)
 + OperatorId: `8D9CC985-ABDC-4851-BCEB-520B877031C8` (string) - The unique identifier for the operator (GUID).
 
@@ -848,6 +885,12 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 ## Attend Type Enumeration (enum)
 + Unattended - Numerical value 0.  No operator present at the point of service.
 + Attended - Numerical value 1.  Operator present at the point of service.
+
+## Calculation Method Enumeration (enum)
++ Percentage - 0
++ Amount - 1
++ ManuallyEnteredPrice - 2
++ PromotionalPrice - 3
 
 ## Cashier Mode Enumeration (enum)
 + Standard - Numerical value 0.  This cashier was operating under their normal cashier rights.
@@ -881,6 +924,16 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + MenuItem - 0
 + Scanned - 1
 + Keyed - 2
+
+## Product Price Modifier Type Enumeration (enum)
++ DiscountKey - 0
++ SurchargeKey - 1
++ Promotion - 2
++ PriceOverride - 3
++ VariablePrice - 4
++ TenderDiscount - 5
++ TenderSurcharge - 6
++ QuantityDiscount - 7
 
 ## Product Type Enumeration (enum)
 + Standard - Standard product.
@@ -978,6 +1031,18 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Weekly
 + Monthly
 + Custom
+
+## Tax Exempt Override Type Enumeration (enum)
++ Normal - 0
++ Exempt - 1
++ Override - 2
+
+## Tender Type Enumeration (enum)
++ Cash - 0
++ Check - 1
++ StoredValue - 2
++ CreditCard - 3
++ BoardCashEquiv - 4
 
 ## Timestamp Type Enumeration (enum)
 + Start - When the transaction was started at the Originator, typically set by Originator.
