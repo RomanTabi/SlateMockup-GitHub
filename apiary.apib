@@ -633,7 +633,8 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 
 ## Transaction Base (object)
 + Include Generic Id
-+ Disposition: 2 - NEEDS DEFINITION
++ Disposition (Disposition Enumeration) - The state of the transaction.
++ TransactionNumber: 12345 - The numerical identifier for the transaction.
 + ForcePost: false - If true, transaction was performed offline and needs to be forced.  If false, transaction was online and should be treated as such.
 + TransactionTimestamps (array[Transaction Timestamp Base]) - Collection of timestamps associated with the transaction.
 + Include (Transaction Element Display)
@@ -1066,6 +1067,13 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + 1 - AT3000 - Numerical value = 1.  AT3000 style transaction terminal.
 + 2 - MF4100 - Numerical value = 2.  MF4100 style transaction terminal.
 + 3 - PR5000 - Numerical value = 3.  PR5000/Slate style transaciton terminal.
+
+## Disposition Enumeration (enum)
++ 0 - Unknown
++ 1 - InProcess: Transaction is in process at the originator.
++ 2 - Complete: Finished at the originator.
++ 3 - Accepted: Finished at originator, and accepted by host/api/db.
++ 4 - Rejected: Finished at originator, but rejected by host/api/db
 
 ## Operator Session Begin Methods (enum)
 + PickListAndOperatorNumber - Operator can login by selecting their name from a list or provide their operator number and a PIN.
