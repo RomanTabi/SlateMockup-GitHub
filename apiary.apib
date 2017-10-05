@@ -639,12 +639,26 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + TransactionTimestamps (array[Transaction Timestamp Base]) - Collection of timestamps associated with the transaction.
 + Include (Transaction Element Display)
 
+## Transaction Operator Session Begin End Base (object)
++ Include Generic Id
++ Disposition (Disposition Enumeration) - The state of the transaction.
++ TransactionNumber: 12345 - The numerical identifier for the transaction.
++ ForcePost: false - If true, transaction was performed offline and needs to be forced.  If false, transaction was online and should be treated as such.
++ TransactionTimestamps (array[Transaction Timestamp Base]) - Collection of timestamps associated with the transaction.
++ Include (Transaction Element Operator Session Begin End)
+
 ## Transaction Element Display (object) - Abstract class type used as a base definition for a variety of "element" types.
 + Elements (array) - List of elements contained in this transaction.  An Element is an abstract class type used as a base definition for a variety of "Element" types.
      + Members
         + (Originator Element) - Inherited element required in the elements part of a transaction to denote where the transaction originated from (the device).
         + (Operator Element) - Inherited element required in the elements part of a transaction to denote who performed the transaction (the operator or cashier).
         + (Arts Transaction Element) - Inherited element required in the elements part of a transaction to denote that an arts type transaction took place.
+
+## Transaction Element Operator Session Begin End  (object)
++ Elements (array) - List of elements contained in this transaction.  An Element is an abstract class type used as a base definition for a variety of "Element" types.
+     + Members
+        + (Originator Element) - Inherited element required in the elements part of a transaction to denote where the transaction originated from (the device).
+        + (Operator Element) - Inherited element required in the elements part of a transaction to denote who performed the transaction (the operator or cashier).
 
 ## Originator Element(object) - Inherited element required in the elements part of a transaction to denote where the transaction originated from (the device).
 + $type: `BbTS.Domain.Models.Container.Elements.OriginatorElement, BbTS.Domain.Models` - The required field denoting the concrete type of this element.
@@ -895,29 +909,26 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 
 ## Operator Session Begin Request (object)
 + Include Request Id
-+ Include Operator Id
-+ Include Device Id
-+ Include Session Id
-+ DateTimeUTC: `2012-04-23T18:25:43.511Z` (string) - (DateTime object) The date and time that the login occured.
-+ DateTimeOffset: `-07:00` (string) - The UTC offset of the location the device is currently in.
++ Transaction (Transaction Operator Session Begin End Base)
 
 ## Operator Session Begin Response (object)
-+ Include Request Id
++ Include Processing Result Response
 
 ## Operator Session End Request (object)
 + Include Request Id
-+ Include Operator Id
-+ Include Device Id
-+ Include Session Id
-+ DateTimeUTC: `2012-04-23T18:25:43.511Z` (string) - (DateTime object) The date and time that the logout occured.
-+ DateTimeOffset: `-07:00` (string) - The UTC offset of the location the device is currently in.
++ Transaction (Transaction Operator Session Begin End Base)
 
 ## Operator Session End Response (object)
-+ Include Request Id
++ Include Processing Result Response
 
 ## Physical Id Type Enumeration (enum)
 + 0 - Card
 + 1 - Contactless
+
+## Processing Result Response (object)
++ Include Request Id
++ ErrorCode: 0 - The result code.  0 means sucess.
++ DeniedText - The result message.
 
 ## Device Registration Request (object)
 + Include Request Id
