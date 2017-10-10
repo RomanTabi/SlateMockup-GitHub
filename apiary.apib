@@ -224,6 +224,45 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     + Attributes (Response 400 Error)
     
    
+# Group Report
+    
+## Report Management [/report]
+
+### Drawer Audit Get [GET /report/operator/{SessionGuid}]
++ Attributes
+    + SessionGuid: `eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee` - The unique identifier for the session (GUID).
+    
++ Response 200
+    + Headers
+    
+            Content-Type: application/json; charset=UTF-8
+    + Attributes (Drawer Audit Get Response)
+   
+   
+### Pos Audit Get [GET /report/originator/{OriginatorGuid}/{BusinessDayType}]
++ Attributes
+    + OriginatorGuid: `dddddddd-dddd-dddd-dddd-dddddddddddd` - The unique identifier for the device (GUID).
+    + BusinessDayType: 1 (number) - Type of day for which the report will be generated (1 - today, 2 - yesterday). Value can be ommited.
+    
++ Response 200
+    + Headers
+    
+            Content-Type: application/json; charset=UTF-8
+    + Attributes (Daily Report Get Response)
+
+
+### ProfitCenter Audit Get [GET /report/profitcenter/{ProfitCenterGuid}/{BusinessDayType}]
++ Attributes
+    + ProfitCenterGuid: `ffffffff-ffff-ffff-ffff-ffffffffffff` - The unique identifier for the profit center (GUID).
+    + BusinessDayType: 1 (number) - Type of day for which the report will be generated (1 - today, 2 - yesterday). Can be ommited.
+    
++ Response 200
+    + Headers
+    
+            Content-Type: application/json; charset=UTF-8
+    + Attributes (Daily Report Get Response)
+    
+    
 # Group Service
 
 ## Service Healthcheck [GET /healthcheck]
@@ -589,6 +628,21 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + AllowPolicySurcharge: true (boolean) - Indicates if the product price can be surcharged by policy-based surcharge rule.
 + DateTimeOffset: `-07:00` (string) - The UTC offset of the included DateTime objects.
 
+## Report Base (object)
++ ReportType: `Drawer` (string) - Type of report.
++ PosName: `VMMILECEK1` (string) - The name of Point of Sale for which the report is generated.
++ ProfitCenterName: `Martin's Second PF` (string) - The name of Profit Center for which is report generated or for which the Pos is assigned.
++ Items (array[Report Item Base]) - List of report items.
+
+## Report Item Base (object)
++ Type: `Sales` (string) - Item type.
++ Name: `Returns` (string) - Item name.
++ Value: 767.75 (number) - Item value.
++ Count: 44 (number) - Item count.
++ ValueType: `Currency` (string) - Type of value.
++ Description: `Product Returns` - Item description.
++ DisplayOrder: 2 - Item display order.
+
 ## Role Base (object)
 + RoleId: `065dfe36-7694-4571-b86c-d9bedacdbf77`(string) - Unique identifier for the role.
 + Rights (array[Rights Enumeration]) - List of rights assigned to the role.
@@ -930,10 +984,22 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + ErrorCode: 0 - The result code.  0 means sucess.
 + DeniedText - The result message.
 
+## Daily Report Get Response (object)
++ ForDate: `2017-10-09` (string) - Date for which the report is generated.
++ CurrentDate: `2017-10-10 13:11:23` (string) - Current Date.
++ Include Report Base
+
+## Drawer Audit Get Response (object)
++ CashierName: `Cashier Martin 1111 (101)` (string) - Name of the cashier.
++ CashDrawerNumber: 1 (number) - Cash Drawer.
++ SessionStart: `2017-09-15 22:06:53` (string) - Date of the start of the first transaction.
++ SessionEnd: `2017-09-19 10:20:42` (string) - Date of the end of the last transaction.
++ Include Report Base
+
 ## Device Registration Request (object)
 + Include Request Id
 + Include Device Registration Base
-    
+
 ## Device Registration Response (object)
 + Include Request Id
 + Include Device Id
