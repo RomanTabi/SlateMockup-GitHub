@@ -478,7 +478,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + PinChangeRequired: false (boolean) - Does the operator have to change their pin.
 + CardNumber: 1234560000000022 (string) - The operator`s card number.
 + IssueNumber: null (string) - The operator`s card issue number.
-+ Roles (array[string]) - The list of roles (identified as a list of guids corresponding to role ids) assigned to the operator.
++ RoleGroup: `065dfe36-7694-4571-b86c-d9bedacdbf77` - The unique identifier (Guid) of the role group the operator belongs to.
         
 ## Credential Enumeration (enum)
 + Track2 - Credential origin is from a card swipe of Track2 data.
@@ -488,11 +488,6 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + IssueNumber - The issue number assigned to a card (also requires CardNumber credential to be present).
 + UserGuid - The unigue (Guid) identifier assigned to the customer.
 + IdNumber - The unique identifier assigned to an agent in the system (i.e. Customer, Operator, etc.).
-
-## Credential Requirements Enumeration (enum)
-+ CredentialPresent - The credential must be physically present for verification (i.e. Card Swipe, Biometrics, etc.).
-+ CredentialNotPresent - The credentail value can be manually entered
-+ Number - The unique identifier assigned to an agent in the system (i.e. Customer, Operator, etc.).
 
 ## Credential Base (object)
 + Type: `Track2` (Credential Enumeration) - Enumeration of possible credential values.
@@ -523,6 +518,22 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + MacAddress: AA:BB:CC:DD:EE:FF (string, required) - The MAC address for the device.
 + SerialNumber: `serial` (string, required) - The Serial Number of the device.
 + Type (Device Type Enumeration, required) - The type of device trying to register.
+
+## Device Settings Base (object)
++ Include Device Id
++ Periods (array[Board Period Base]) - List of all meal periods.
++ BoardCashEquivalencyPeriods (Board Cash Equivalency Period Base) - The board cash equivalency periods.  Used for offline cash equivalency transactions.
++ CardFormats (array[Card Format Base]) - List of card formats.
++ Operators (array[Operator Base]) - List of operators allowed to operate the device.
++ Events (array[Event Base]) - List of all events supported by the device.
++ MealTypes (array[Meal Type Base]) - List of all meal types.
++ OperationalRequirements (Operational Requirements Base) - Operator and Customer requirements and product version.
++ Products (array[Product Base]) - List of products for the device.
++ Roles (array[Role Base]) - List of roles that can be assigned to an operator.
++ StoredValueAccounts (array[Stored Value Account Base]) - List of all stored value accounts supported on the device.
++ TaxSchedules (array[Tax Schedule Base]) - List of tax schedules for the device.
++ Tenders (array[Tender Base]) - List of tenders for the device.
++ Properties (array[NameValuePair]) - Properties bag for the device.
 
 ## Encoded Image (object)
 + Image: `base64encoded string` (string) - The image as a base 64 encoded string.
@@ -600,8 +611,8 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Value: my_value (string, required) - The value for the pair.
 
 ## Operational Requirements Base (object)
-+ CustomerIdentificationRequirement (array[Credential Requirements Enumeration]) - Identification requirements for a customer using the device.
-+ OperatorLoginRequirements (array[Credential Requirements Enumeration]) - Specifies the methods that Operators can use to login to the POS.
++ CustomerIdentificationRequirement (array[Credential Enumeration]) - Identification requirements for a customer using the device.
++ OperatorLoginRequirements (array[Credential Enumeration]) - Specifies the methods that Operators can use to login to the POS.
 + TsopProductVersion: 4.0.0.0 (string) - The product version of Transact OnPremise running on the server.
 
 ## Product Base (object)
@@ -626,6 +637,8 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + LastModified: `2016-04-23T18:25:43.511Z` (string) - DateTime object (apiary can`t do datetime) Last modified date/time (UTC)
 + AllowPolicyDiscount: true (boolean) - Indicates if the product price can be discounted by policy-based discount rule.
 + AllowPolicySurcharge: true (boolean) - Indicates if the product price can be surcharged by policy-based surcharge rule.
++ Keytop1 - Unused in slate.
++ Keytop2 - Unused in slate.
 + DateTimeOffset: `-07:00` (string) - The UTC offset of the included DateTime objects.
 
 ## Report Base (object)
@@ -670,10 +683,11 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + TaxableAmountMaximum: 1.00 (number) - The taxable amount maximum value.
 + TaxLinkTaxScheduleId: 2 (number) - The linked tax schedule id.
 + TaxLinkTaxTaxes: false (boolean) - Needs explanation.
-+ TenderTaxList (array[Tax Tender Base]) - The list of tender taxes.
++ TaxScheduleTenders (array[Tax Tender Base]) - The list of tender taxes.
 
 ## Tax Tender Base (object)
 + TenderId: 1 (number) - The tender id.
++ TaxScheduleId: 1 (number) - The numeric identifier for the tax schedule this tax tender is assigned to.
 + TaxPercent: 0.0998 (number) - Tax percent.  (If 9.98% tax rate, TaxPercent == 0.0998m)
 
 ## Tender Base (object)
@@ -681,6 +695,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Name: cp cash 1 (string) - The name of the tender.
 + Type: 1 (number) - The type of tender.
 + ShortName: cpcash1tt (string) - The shortened name for the tender.
++ RoundingIncrement: 0.05 (number) - The increment in which cash is rounded for countries where that is applicable.
 
 ## Transaction related objects section do not use for documentation (object)
 + x: `----------------------------------------------------------------------------------------------------`
@@ -713,7 +728,8 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
      + Members
         + (Originator Element) - Inherited element required in the elements part of a transaction to denote where the transaction originated from (the device).
         + (Operator Element) - Inherited element required in the elements part of a transaction to denote who performed the transaction (the operator or cashier).
-
+        + (Control Element) - Inherited element required in the elements part of a transaction to promote information about the transaction.
+        
 ## Originator Element(object) - Inherited element required in the elements part of a transaction to denote where the transaction originated from (the device).
 + $type: `BbTS.Domain.Models.Container.Elements.OriginatorElement, BbTS.Domain.Models` - The required field denoting the concrete type of this element.
 + Include Originator Id
@@ -744,6 +760,15 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + ControlTotal: 12345.67 - Control total at the time of this transaction (including this transaction).
 + ChangeInControlTotal: 12345.67 - The change in control total resulting from this transaction.  This should never be negative.
 + Include Line Item Display
+
+## Control Element (object)
++ $type: `BbTS.Domain.Models.Container.Elements.ControlElement, BbTS.Domain.Models` - The required field denoting the concrete type of this element.
++ Include Transaction Id
++ Include Session Id
++ ControlType (enum) - Not currently checked but left in for future functionality.
+    + Members
+        + 1 - SignOn
+        + 2 - SignOff
 
 ## Line Item Display (object)
 + LineItems (array)
@@ -1005,19 +1030,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + Include Device Id
 
 ## Device Settings Response (object)
-+ Include Device Id
-+ BoardPeriods (array[Board Period Base]) - List of all meal periods.
-+ CardFormats (array[Card Format Base]) - List of card formats.
-+ Operators (array[Operator Base]) - List of operators allowed to operate the device.
-+ Events (array[Event Base]) - List of all events supported by the device.
-+ MealTypes (array[Meal Type Base]) - List of all meal types.
-+ OperationalRequirements (Operational Requirements Base) - Operator and Customer requirements and product version.
-+ Products (array[Product Base]) - List of products for the device.
-+ Roles (array[Role Base]) - List of roles that can be assigned to an operator.
-+ StoredValueAccounts (array[Stored Value Account Base]) - List of all stored value accounts supported on the device.
-+ TaxSchedules (array[Tax Schedule Base]) - List of tax schedules for the device.
-+ Tenders (array[Tender Base]) - List of tenders for the device.
-+ Properties (array[NameValuePair]) - Properties bag for the device.
++ Settings (Device Settings Base)
 
 ## Event Log Get Response (object)
 + EventLogId: 1 (number) - Event log id.
@@ -1121,6 +1134,24 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 ## Attend Type Enumeration (enum)
 + 0 - Unattended, No operator present at the point of service.
 + 1 - Attended - Numerical value 1.  Operator present at the point of service.
+
+## Board Cash Equivalency Period Base (object)
++ PeriodNumber: 1 (number) - The period number.
++ Monday (Board Period Day)
++ Tuesday (Board Period Day)
++ Wednesday (Board Period Day)
++ Thursday (Board Period Day)
++ Friday (Board Period Day)
++ Saturday (Board Period Day)
++ Sunday (Board Period Day)
++ OfflineCashEquivValue: 5000 (number) - The value of cash equiv for this period while offline.
+
+## Board Period Day (object)
++ Name: bs1b-red eye - The name of the board period this day belongs to.
++ BoardPeriodStartTime: `1899-12-30T02:00:00` - The start time for board.
++ BoardPeriodStopTime: `1899-12-30T06:00:00` - The end time for board.
++ CashEquivPeriodStartTime: `1899-12-30T02:00:00` - The start time for cash equivalency.
++ CashEquivPeriodStopTime: `1899-12-30T06:00:00` - The end time for cash equivalency.
 
 ## Calculation Method Enumeration (enum)
 + 0 - Percentage - 0
