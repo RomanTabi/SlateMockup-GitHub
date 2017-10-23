@@ -6,9 +6,9 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 
 # Group Board
     
-## Board Management [/board]
+## Board Management
 
-### Board Information Get [GET /board/device/{OriginatorGuid}/customer/{CustomerGuid}/information?IsGuestMeal={isGuestMeal}&MealTypeId={mealtypeId}&ForcePost={forcePost}&BoardPlanId={boardPlanId}"]
+### Board Information Get [GET /transact/api/board/device/{OriginatorGuid}/customer/{CustomerGuid}/information?IsGuestMeal={isGuestMeal}&MealTypeId={mealtypeId}&ForcePost={forcePost}&BoardPlanId={boardPlanId}"]
 + Attributes
     + CustomerGuid: `cccccccc-cccc-cccc-cccc-cccccccccccc` - The unique identifier for the customer (GUID).
     + OriginatorGuid: `dddddddd-dddd-dddd-dddd-dddddddddddd` - The unique identifier for the device (GUID).
@@ -28,7 +28,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     
 ## Customer Management [/customer]
 
-### Customer Board Balance Get [GET /customer/{customerId}/device/{deviceId}/board/balance]
+### Customer Board Balance Get [GET /transact/api/customer/{customerId}/device/{deviceId}/board/balance]
 + Attributes
     + customerId: `cccccccc-cccc-cccc-cccc-cccccccccccc` - The unique identifier for the customer (GUID).
     + deviceId: `dddddddd-dddd-dddd-dddd-dddddddddddd` - The unique identifier for the device (GUID).
@@ -39,7 +39,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
             Content-Type: application/json; charset=UTF-8
     + Attributes (Customer Board Balance Get Response)
 
-### Customer Stored Value Balance Get [GET /customer/{customerId}/device/{deviceId}/storedvalue/balance]
+### Customer Stored Value Balance Get [GET /transact/api/customer/{customerId}/device/{deviceId}/storedvalue/balance]
 + Attributes
     + customerId: `cccccccc-cccc-cccc-cccc-cccccccccccc` - The unique identifier for the customer (GUID).
     + deviceId: `dddddddd-dddd-dddd-dddd-dddddddddddd` - The unique identifier for the device (GUID).
@@ -50,7 +50,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
             Content-Type: application/json; charset=UTF-8
     + Attributes (Customer Stored Value Balance Get Response)
 
-### Customer Credential Verify [POST /customer/credential/verify]
+### Customer Credential Verify [POST /transact/api/customer/credential/verify]
 + Request (application/json)
     + Attributes (Customer Credential Verify Request)
 
@@ -64,7 +64,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     - Response code 400 is returned if there is a problem with any of the request parameters.
     + Attributes (Response 400 Error)
 
-### Customer Info Get [GET /customer/{id}]
+### Customer Info Get [GET /transact/api/customer/{id}]
 + Attributes
     + id: `cccccccc-cccc-cccc-cccc-cccccccccccc` - The unique identifier for the customer (GUID).
 
@@ -78,7 +78,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 
 ## Device Operation [/device]
 
-### Device Heartbeat [POST /device/heartbeat]
+### Device Heartbeat [POST /transact/api/device/heartbeat]
 + Request (application/json)
     + Attributes (Device Heartbeat Request)
     
@@ -92,7 +92,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     - Response code 400 is returned if there is a problem with any of the request parameters.
     + Attributes (Response 400 Error)
 
-### Download Device Operators [GET /device/{id}/operators]
+### Download Device Operators [GET /transact/api/device/{id}/operators]
 + Attributes
     + id: `ffffffff-ffff-ffff-ffff-ffffffffffff` (string, required) - The unique identifier assigned to the device.
 
@@ -103,7 +103,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     + Attributes (Operators Get Response)
     
 
-### Download Device Settings [GET /device/{id}/settings]
+### Download Device Settings [GET /transact/api/device/{id}/settings]
 + Attributes
     + id: `ffffffff-ffff-ffff-ffff-ffffffffffff` (string, required) - The unique identifier assigned to the device.
 
@@ -113,7 +113,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
             Content-Type: application/json; charset=UTF-8
     + Attributes (Device Settings Response)
 
-### Register a device [POST /device/register]
+### Register a device [POST /transact/api/device/register]
 + Request (application/json)
     + Attributes (Device Registration Request)
     
@@ -133,7 +133,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     
 ## Event Log Management [/eventlog]
 
-### Event Log Get [GET /eventlog/{EventLogId}]
+### Event Log Get [GET /transact/api/eventlog/{EventLogId}]
 + Attributes
     + EventLogId: 501 (number) - The unique identifier for the event log (ID).
     
@@ -143,7 +143,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
             Content-Type: application/json; charset=UTF-8
     + Attributes (Event Log Get Response)
 
-### Event Log Get Summary [GET /eventlog/summary]
+### Event Log Get Summary [GET /transact/api/eventlog/summary]
 + Attributes (Event Log Get Summary Request)
     
 + Response 200
@@ -152,7 +152,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
             Content-Type: application/json; charset=UTF-8
     + Attributes (Event Log Get Summary Response)
 
-### Event Log Set [POST /eventlog]
+### Event Log Set [POST /transact/api/eventlog]
 + Attributes (Event Log Set Request)
     
 + Response 200 
@@ -166,7 +166,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 
 ## Operator Management [/operator]
 
-### Operator Session Begin [POST /operator/session/begin]
+### Operator Session Begin [POST /transact/api/operator/session/begin]
 + Request (application/json)
     + Attributes (Operator Session Begin Request)
     
@@ -180,7 +180,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     - Response code 400 is returned if there is a problem with any of the request parameters.
     + Attributes (Response 400 Error)
 
-### Operator Session End [POST /operator/session/end]
+### Operator Session End [POST /transact/api/operator/session/end]
 + Request (application/json)
     + Attributes (Operator Session End Request)
     
@@ -195,7 +195,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     + Attributes (Response 400 Error)
 
 
-### Operator PIN Change [PUT /operator/pinchange]
+### Operator PIN Change [PUT /transact/api/operator/pinchange]
 + Request (application/json)
     + Attributes (Operator PIN Change Request)
     
@@ -209,7 +209,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     - Response code 400 is returned if there is a problem with any of the request parameters.
     + Attributes (Response 400 Error)
 
-### Operator Validate [POST /operator/validate]
+### Operator Validate [POST /transact/api/operator/validate]
 + Request (application/json)
     + Attributes (Operator Validate Request)
     
@@ -228,7 +228,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     
 ## Report Management [/report]
 
-### Drawer Audit Get [GET /report/operator/{SessionGuid}]
+### Drawer Audit Get [GET /transact/api/report/operator/{SessionGuid}]
 + Attributes
     + SessionGuid: `eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee` - The unique identifier for the session (GUID).
     
@@ -238,8 +238,8 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
             Content-Type: application/json; charset=UTF-8
     + Attributes (Drawer Audit Get Response)
    
-   
-### Pos Audit Get [GET /report/originator/{OriginatorGuid}/{BusinessDayType}]
+
+### Pos Audit Get [GET /transact/api/report/originator/{OriginatorGuid}/{BusinessDayType}]
 + Attributes
     + OriginatorGuid: `dddddddd-dddd-dddd-dddd-dddddddddddd` - The unique identifier for the device (GUID).
     + BusinessDayType: 1 (number) - Type of day for which the report will be generated (1 - today, 2 - yesterday). Value can be ommited.
@@ -251,7 +251,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     + Attributes (Daily Report Get Response)
 
 
-### ProfitCenter Audit Get [GET /report/profitcenter/{ProfitCenterGuid}/{BusinessDayType}]
+### ProfitCenter Audit Get [GET /transact/api/report/profitcenter/{ProfitCenterGuid}/{BusinessDayType}]
 + Attributes
     + ProfitCenterGuid: `ffffffff-ffff-ffff-ffff-ffffffffffff` - The unique identifier for the profit center (GUID).
     + BusinessDayType: 1 (number) - Type of day for which the report will be generated (1 - today, 2 - yesterday). Can be ommited.
@@ -265,7 +265,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
     
 # Group Service
 
-## Service Healthcheck [GET /healthcheck]
+## Service Healthcheck [GET /transact/api/healthcheck]
     
 + Response 200
     + Headers
@@ -278,7 +278,7 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 
 ## Transaction Processing [/transaction]
 
-### Process a transaction [POST /transaction]
+### Process a transaction [POST /transact/api/transaction]
 + Request (application/json)
     + Attributes (Transaction Post Request)
     
@@ -356,10 +356,10 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 + BoardPeriodDay: 1 (number) - Board Period Day.
 + ProfitCenterId: 1 (number) - Profit Center ID.
 + BoardPeriodName: MyPeriodName (string) - Board Period Name.
-+ BoardPeriodStartDateTime: `2017-04-23T12:00:00.123` (string) - Board Period Start Date.
-+ BoardPeriodStopDateTime: `2017-04-23T13:00:00.321Z` (string) - Board Period Start Date.
-+ CePeriodStartDateTime: `` (string) - CE Period Start Date.
-+ CePeriodStopDateTime: `` (string) - CE Period Start Date.
++ BoardPeriodStartDateTime: `2017-04-23T12:00:00.123` (string) - (Nullable) Board Period Start Date.
++ BoardPeriodStopDateTime: `2017-04-23T13:00:00.321Z` (string) - (Nullable) Board Period Start Date.
++ CePeriodStartDateTime: `2017-04-23T12:00:00.123` (string) - (Nullable) CE Period Start Date.
++ CePeriodStopDateTime: `2017-04-23T12:00:00.123` (string) - (Nullable) CE Period Start Date.
 + DateTimeOffset: `-07:00` (string) - The UTC offset of the included DateTime objects.
 
 ## Card Format Base (object)
@@ -1149,10 +1149,10 @@ This is the API documentation for the Blackboard Transact Slate project.  The in
 
 ## Board Period Day (object)
 + Name: bs1b-red eye - The name of the board period this day belongs to.
-+ BoardPeriodStartTime: `1899-12-30T02:00:00` - The start time for board.
-+ BoardPeriodStopTime: `1899-12-30T06:00:00` - The end time for board.
-+ CashEquivPeriodStartTime: `1899-12-30T02:00:00` - The start time for cash equivalency.
-+ CashEquivPeriodStopTime: `1899-12-30T06:00:00` - The end time for cash equivalency.
++ BoardPeriodStartTime: `1899-12-30T02:00:00` - (Nullable) The start time for board.
++ BoardPeriodStopTime: `1899-12-30T06:00:00` - (Nullable) The end time for board.
++ CashEquivPeriodStartTime: `1899-12-30T02:00:00` - (Nullable) The start time for cash equivalency.
++ CashEquivPeriodStopTime: `1899-12-30T06:00:00` - (Nullable) The end time for cash equivalency.
 
 ## Calculation Method Enumeration (enum)
 + 0 - Percentage - 0
